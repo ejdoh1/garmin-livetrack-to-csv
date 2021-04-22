@@ -1,0 +1,29 @@
+service: livetrack-to-csv
+provider:
+  name: aws
+  runtime: python3.8
+  region: ap-southeast-2
+  profile: ctolabs
+
+package:
+  exclude:
+    - node_modules/**
+
+functions:
+  csv:
+    handler: run.run
+    events:
+      - http:
+          path: session/{session}
+          method: get
+          request:
+            parameters:
+              paths:
+                session: true
+
+custom:
+  pythonRequirements:
+    dockerizePip: non-linux
+
+plugins:
+  - serverless-python-requirements
