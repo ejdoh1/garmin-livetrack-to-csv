@@ -12,7 +12,7 @@ def run(event, context):
     # u = f"https://livetrack.garmin.com/services/session/{s}/trackpoints?requestTime={t0}&from={t1}"
     u = f"https://livetrack.garmin.com/services/session/{s}/trackpoints"
     r = requests.get(u).json()
-    n = json_normalize(r['trackPoints'])
+    n = json_normalize(r['trackPoints'][len(r['trackPoints'])-1])
     return {
         "statusCode": 200,
         "body": n.to_csv()
